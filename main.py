@@ -1,9 +1,20 @@
 from question_model import Question
 from data import question_data
 from quiz_brain import QuizBrain
+import requests
+
+# =========== API =========== #
+parameters = {
+    "amount": 10,
+    "category": 9,
+    "type": "boolean"
+}
+
+response = requests.get(question_data, params=parameters)
+data = response.json()
 
 question_bank = []
-for question in question_data:
+for question in data["results"]:
     question_text = question["question"]
     question_answer = question["correct_answer"]
     new_question = Question(question_text, question_answer)
